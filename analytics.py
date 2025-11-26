@@ -1,19 +1,16 @@
 import duckdb
 import os
 
-# === ADD: Check if parquet file exists ===
 if not os.path.exists("data/clean_orders.parquet"):
     print("✗ Error: data/clean_orders.parquet not found. Run 02_run_etl.py first.")
     exit(1)
 
-# === ADD: Use context manager to auto-close connection ===
 try:
     with duckdb.connect() as con:
         print("=" * 50)
         print("TOP CATEGORIES BY REVENUE")
         print("=" * 50)
         
-        # === ADD: Error handling for queries ===
         try:
             result = con.execute("""
                 SELECT 
@@ -47,7 +44,6 @@ try:
         except Exception as e:
             print(f"✗ Error running daily revenue query: {e}")
         
-        # === ADD: Summary statistics ===
         print("\n" + "=" * 50)
         print("OVERALL SUMMARY")
         print("=" * 50)
